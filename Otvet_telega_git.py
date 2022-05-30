@@ -20,7 +20,7 @@ def main():
     client.start()
     f = open('id.txt', 'w')
     f.close()
-    @client.on(events.NewMessage(incoming= True))#    @client.on(events.NewMessage(incoming=True))@Smilpok
+    @client.on(events.NewMessage(incoming= True))#    @client.on(events.NewMessage(incoming=True))
     async def handler(event):
         print(time.asctime(), '-', event.message)
         time.sleep(2)
