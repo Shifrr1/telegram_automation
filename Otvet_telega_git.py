@@ -11,12 +11,9 @@ api_hash = '****************************'  # Твой api_hash Telegramm  (https
 
 message = ''' Привет🖐'''
 
-
 def main():
     client = TelegramClient('user_1', api_id, api_hash)
     client.start()
-    f = open('id.txt', 'w')
-    f.close()
     mydict = []
 
     @client.on(events.NewMessage(incoming=True))  # @client.on(events.NewMessage(incoming=True))
