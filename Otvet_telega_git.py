@@ -1,6 +1,6 @@
 # !/usr/bin/python3
 # -*- coding: utf-8 -*-
-'''Автоответчик подключается по вашому api_id и отвечает Юзерам телеграмма (не отвечает в каналы и чаты).
+'''Автоответчик подключается по вашому api_id и отвечает Юзерам телеграмма (не отвечает в каналы, чаты и ботам).
  Далее записывает ID в текстовый документ, для того чтобы не отправлять сообщение повторно тому же юзеру.
  При рестарте id.txt затирается'''
 import time
@@ -21,10 +21,11 @@ def main():
         print(time.asctime(), '-', event.message)
         time.sleep(2)
         full_data = ', '.join(mydict)
+        sender = await event.get_sender()  # Нужен для проверки (sender.bot)
         if str(event.peer_id).find('chat_id=********') > 0:  # Чат для проверки работоспособности автоответчика
             await event.reply(message)
         if full_data.find(str(event.peer_id)) == -1 and str(event.peer_id).find('chat_id') == -1 and str(
-                event.peer_id).find('channel_id') == -1:
+                event.peer_id).find('channel_id') == -1 and not(sender.bot):
             mydict.append(str(event.peer_id))
             await event.reply(message)
 
