@@ -1,15 +1,13 @@
 # !/usr/bin/python3
 # -*- coding: utf-8 -*-
-'''Автоответчик подключается по вашому api_id и отвечает Юзерам телеграмма (не отвечает в каналы, чаты и ботам).
- Далее записывает ID в текстовый документ, для того чтобы не отправлять сообщение повторно тому же юзеру.
- При рестарте id.txt затирается'''
 import time
 from telethon import TelegramClient, events
 
-api_id = '*********'  # Твой ID telegramm (https://core.telegram.org/api/obtaining_api_id)
-api_hash = '****************************'  # Твой api_hash Telegramm  (https://core.telegram.org/api/obtaining_api_id)
-
+api_id = '<api_id>'  # Твой ID telegramm (https://core.telegram.org/api/obtaining_api_id)
+api_hash = '<api_hash>'  # Твой api_hash Telegramm  (https://core.telegram.org/api/obtaining_api_id)
 message = ''' Привет🖐'''
+chat_to_check = 'chat_id=<id чата для проверки работы автоответчика>'
+
 
 def main():
     client = TelegramClient('user_1', api_id, api_hash)
@@ -18,24 +16,23 @@ def main():
 
     @client.on(events.NewMessage(incoming=True))  # @client.on(events.NewMessage(incoming=True))
     async def handler(event, mydict=mydict):
+
         print(time.asctime(), '-', event.message)
-        time.sleep(2)
         full_data = ', '.join(mydict)
         sender = await event.get_sender()  # Нужен для проверки (sender.bot)
-        if str(event.peer_id).find('chat_id=********') > 0:  # Чат для проверки работоспособности автоответчика
+        if str(event.peer_id).find(chat_to_check) > 0:  # Чат для проверки работоспособности автоответчика
             await event.reply(message)
         if full_data.find(str(event.peer_id)) == -1 and str(event.peer_id).find('chat_id') == -1 and str(
-                event.peer_id).find('channel_id') == -1 and not(sender.bot):
+                event.peer_id).find('channel_id') == -1 and not sender.bot:
             mydict.append(str(event.peer_id))
             await event.reply(message)
 
-    print(time.asctime(), '-', 'Waiting for incoming messages...')
+    print(time.asctime(), '-', 'Ожидание ...')
     client.run_until_disconnected()
-    print(time.asctime(), '-', 'Stopped!')
+    print(time.asctime(), '-', 'Остановка')
 
 
 if __name__ == '__main__':
     main()
 else:
     pass
-# https://docs.python.org/2/library/os.html
