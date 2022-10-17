@@ -7,10 +7,11 @@ api_id = '<api_id>'  # Твой ID telegramm (https://core.telegram.org/api/obta
 api_hash = '<api_hash>'  # Твой api_hash Telegramm  (https://core.telegram.org/api/obtaining_api_id)
 message = ''' Привет🖐'''
 chat_to_check = 'chat_id=<id чата для проверки работы автоответчика>'
+path_to = '<путь до сессии (Где она будет храниться)>'
 
 
 def main():
-    client = TelegramClient('user_1', api_id, api_hash)
+    client = TelegramClient(f'{path_to}user_1', api_id, api_hash)
     client.start()
     mydict = []
 

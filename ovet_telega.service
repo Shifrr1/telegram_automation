@@ -1,14 +1,14 @@
 [Unit]
-  Description=ovet_telega
- 
+Description=ovet_telega
+
 [Service]
-  ExecStart=/usr/bin/python /************************** # путь до телеграмм бота
-  Restart=always
-  RestartSec=5
- 
-  SyslogIdentifier=ovet_telega
-  SyslogFacility=daemon
- 
+ExecStart=/usr/bin/python /************************** # путь до телеграмм бота
+User=<user_name>
+Restart=on-failure
+RestartSec=5s
+SyslogIdentifier=ovet_telega
+SyslogFacility=daemon
+
 [Install]
-  WantedBy=multi-user.target
+WantedBy=multi-user.target
 
